@@ -56,7 +56,7 @@ SUPERVISOR_SYSTEM_PROMPT = """你是一个竞品调研项目的总指挥。你�
 
 def supervisor_node(state: AgentState) -> dict:
     """总指挥节点 - 分析状态并决定下一步调度"""
-    logger.info(f"[Supervisor] 开始分析, 当前阶段: {state.get('current_phase', 'init')}") #todo 初始为'' 有错
+    logger.info(f"[Supervisor] 开始分析, 当前阶段: {state.get('current_phase', '')}") #todo 初始为'' 有错
 
     llm = get_llm(temperature=0.1)
 
@@ -64,10 +64,12 @@ def supervisor_node(state: AgentState) -> dict:
     context_parts = []
     if state.get("task_plan"):
         context_parts.append(f"任务计划: {state['task_plan']}")
+        
     if state.get("research_data"):
         context_parts.append(f"信息采集结果: 已完成 (数据量: {len(state['research_data'])}字)")
     else:
         context_parts.append("信息采集结果: 未完成")
+
     if state.get("analysis_result"):
         context_parts.append(f"数据分析结果: 已完成 (数据量: {len(state['analysis_result'])}字)")
     else:

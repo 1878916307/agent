@@ -76,7 +76,7 @@ def search_market_data(query: str) -> str:
 
         for i, item in enumerate(response.get("results", []), 1):
             title = item.get("title", "无标题")
-            content = item.get("content", "无内容")
+            content = item.get("raw_content", "无内容")
             url = item.get("url", "")
             results.append(f"\n--- 市场数据 {i} ---")
             results.append(f"标题: {title}")
